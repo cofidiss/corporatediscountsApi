@@ -1,3 +1,7 @@
+using corporatediscountsApi.CorporateDiscountsServices;
+using corporatediscountsApi.DbContexts;
+using corporatediscountsApi.Repositories;
+using Microsoft.EntityFrameworkCore;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -6,6 +10,10 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddDbContext<PostgreDbContext>(item => item.UseNpgsql(
+    "User ID=postgres;Password=ZAQ12wsx;Server=127.0.0.1;Port=5432;Database=postgres;Integrated Security=true;Pooling=true;"));
+builder.Services.AddScoped<CorporateDiscountsService, CorporateDiscountsService>();
+builder.Services.AddScoped (typeof(IRepository<,>), typeof(Repository<,>));
 
 var app = builder.Build();
 
