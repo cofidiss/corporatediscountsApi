@@ -1,4 +1,5 @@
 ﻿using corporatediscountsApi.CorporateDiscountsServices;
+using corporatediscountsApi.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace corporatediscountsApi.Controllers
@@ -21,10 +22,10 @@ namespace corporatediscountsApi.Controllers
 
         }
 
-        [HttpGet("/GetDiscountsByFilter")]
-        public IActionResult GetDiscountsByFilter(string firmName)
+        [HttpPost("/GetDiscountsByFilter")]
+        public IActionResult GetDiscountsByFilter(DiscountSearchRequest discountSearchRequest)
         {
-            return Ok(_corporateDiscountsService.GetDiscountsByFilter((x=>   x.FirmName.Equals(firmName) )));
+            return Ok(_corporateDiscountsService.GetDiscountsByFilter((x=>   x.FirmName.Equals(discountSearchRequest.FirmName) )));
 
 
         }
