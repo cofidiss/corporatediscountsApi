@@ -13,7 +13,8 @@ namespace corporatediscountsApi.DbContexts
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfiguration(new CorporateDiscountMap());
-
+            modelBuilder.ApplyConfiguration(new FirmMap());
+            modelBuilder.ApplyConfiguration(new DiscountScopeMap());
 
             base.OnModelCreating(modelBuilder);
         }

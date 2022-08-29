@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using corporatediscountsApi.Entities;
+using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 
 namespace corporatediscountsApi.Repositories
@@ -16,8 +17,14 @@ namespace corporatediscountsApi.Repositories
 
          public IList<Tentity> GetAll()
         {
+            var query = from corporateDiscountEntity in _dbContext.Set<CorporateDiscountEntity>()
+                        join firm in _dbContext.Set<FirmEntity>() on corporateDiscountEntity.FirmId equals firm.Id
+                        join discountScope in _dbContext.Set<DiscountScopeEntity>() on corporateDiscountEntity.ScopeId equals discountScope.Id
+                           
+                        select new { firmid= corporateDiscountEntity.FirmId, firmame= firm.Name,discountScope.Name };
+            
 
-           return  _dbSet.AsEnumerable().ToList(); 
+            return  _dbSet.AsEnumerable().ToList(); 
 
 
 

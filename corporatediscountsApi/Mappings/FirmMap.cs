@@ -9,7 +9,8 @@ namespace corporatediscountsApi.Mappings
         void IEntityTypeConfiguration<FirmEntity>.Configure(EntityTypeBuilder<FirmEntity> builder)
         {
             builder.ToTable("firm");
-            builder.HasKey(x => x.Id).HasName("id");
+            builder.HasKey(x => x.Id);
+            builder.Property(x => x.Id).HasColumnName("id");
             builder.Property(x => x.Name).HasColumnName("name");
             builder.Property(x => x.ContactInfo).HasColumnName("contact_info");
             builder.Property(x => x.CategoryId).HasColumnName("category_id");
