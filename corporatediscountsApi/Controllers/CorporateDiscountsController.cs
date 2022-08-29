@@ -25,7 +25,7 @@ namespace corporatediscountsApi.Controllers
         [HttpPost("/GetDiscountsByFilter")]
         public IActionResult GetDiscountsByFilter(DiscountSearchRequest discountSearchRequest)
         {
-            return Ok(_corporateDiscountsService.GetDiscountsByFilter((x=>   x.FirmName.Equals(discountSearchRequest.FirmName) )));
+            return Ok(_corporateDiscountsService.GetDiscountsByFilter((x=>   x.FirmId.Equals(discountSearchRequest.FirmName) )));
 
 
         }

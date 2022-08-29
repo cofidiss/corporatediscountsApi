@@ -7,21 +7,21 @@ namespace corporatediscountsApi.CorporateDiscountsServices
 {
     public class CorporateDiscountsService
     {
-        public IRepository<CorporateDiscountsEntity,PostgreDbContext> _repository { get; set; }
-        public CorporateDiscountsService(IRepository<CorporateDiscountsEntity, PostgreDbContext> repository)
+        public IRepository<CorporateDiscountEntity,PostgreDbContext> _repository { get; set; }
+        public CorporateDiscountsService(IRepository<CorporateDiscountEntity, PostgreDbContext> repository)
         {
             _repository = repository;
 
 
         }
 
-        public IList<CorporateDiscountsEntity> GetAllDiscounts()
+        public IList<CorporateDiscountEntity> GetAllDiscounts()
         {
            return _repository.GetAll();
         }
 
 
-        public IList<CorporateDiscountsEntity> GetDiscountsByFilter(Expression<Func<CorporateDiscountsEntity,bool>> filter)
+        public IList<CorporateDiscountEntity> GetDiscountsByFilter(Expression<Func<CorporateDiscountEntity,bool>> filter)
         {
             return _repository.GetByFilter(filter);
         }
