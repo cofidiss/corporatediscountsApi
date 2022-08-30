@@ -11,7 +11,7 @@ verirsende alır
  
  ---------------------------------------------------------------------------------------------------------------------------------------------------------------------
     A foreign key 
-is a column or a group of columns in a table that reference the primary key of another table.
+is a column or a group of columns in a table that reference the unique columns of another table.
     foriegn key olan child primary olan parent tablo olsun. şu kısıtlamaları koyar
     1-childaın fk cloumına sadece parenttaki primaryden olan şeyler insert update edilebilir
     2-no actionda parenttdan pkyı silmek ya da update ederken eğer o pk chlildın fk columnda var ise işlem yaptırmaz. parentıdaki bu pkyı değişitrince 
@@ -24,7 +24,6 @@ is a column or a group of columns in a table that reference the primary key of a
    default no actiondır. 
    --------------------------------------------------------------------------------------------------------------------------------------------------------------
     primary key
-   a is a single field or combination of fields that uniquely defines a record. None of the fields that are part of the primary key can contain a NULL value. A table can have only one primary key.
-    
+ A primary key constraint indicates that a column, or group of columns, can be used as a unique identifier for rows in the table. This requires that the values be both unique and not nul
     
   
