@@ -10,8 +10,8 @@ verirsende alır
     (START WITH 10 INCREMENT BY 10)
  
  ---------------------------------------------------------------------------------------------------------------------------------------------------------------------
-    A foreign key 
-is a column or a group of columns in a table that reference the unique columns of another table.
+    A foreign key  defaullta nul
+is a column or a group of columns in a table that reference the unique columns of another table.foreign keyli column  defaullta null olabilir. refenced tabledaki columnda null olmasa bile
     foriegn key olan child primary olan parent tablo olsun. şu kısıtlamaları koyar
     1-childaın fk cloumına sadece parenttaki primaryden olan şeyler insert update edilebilir
     2-no actionda parenttdan pkyı silmek ya da update ederken eğer o pk chlildın fk columnda var ise işlem yaptırmaz. parentıdaki bu pkyı değişitrince 
