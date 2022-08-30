@@ -11,8 +11,8 @@ verirsende alır
     A foreign key is a column or a group of columns in a table that reference the primary key of another table.
     foriegn key olan child primary olan parent tablo olsun. şu kısıtlamaları koyar
     1-childaın fk cloumına sadece parenttaki primaryden olan şeyler insert update edilebilir
-    2-no actionda parenttdan pkyı silmek ya da update ederken eğer o pk chlildın fk columnda var ise işlem yaptırmaz. parentıdaki pkyı değişitrince 
-    childali fk colınını sil (CASCADE) nulla set et (SET NULL)  ya da default değerine set et ( SET DEFAULT) gibi şeyler denilebilir tanımda
+    2-no actionda parenttdan pkyı silmek ya da update ederken eğer o pk chlildın fk columnda var ise işlem yaptırmaz. parentıdaki bu pkyı değişitrince 
+    childali fk colınını sil (CASCADE) nulla set et (SET NULL)  ya da default değerine set et ( SET DEFAULT) gibi şeyler denilebilir o zaman parenttadaki bu pk değişebilir ya da silinebilir.
     [CONSTRAINT fk_name]
    FOREIGN KEY(fk_columns) 
    REFERENCES parent_table(parent_key_columns)
