@@ -7,7 +7,7 @@ namespace corporatediscountsApi.Repositories
     {
         IList<Tentity> GetAll();
 
-
+        public TdbContext DbContext { get; set; }
 
         public IList<Tentity> GetByFilter(Expression<Func<Tentity, bool>> filter);
       

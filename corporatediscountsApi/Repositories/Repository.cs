@@ -6,21 +6,21 @@ namespace corporatediscountsApi.Repositories
 {
     public class Repository<Tentity,TdbContext> :IRepository<Tentity, TdbContext> where TdbContext : DbContext where Tentity:class
     {
-        private TdbContext _dbContext { get; set; }
+        public TdbContext DbContext { get; set; }
         private DbSet<Tentity> _dbSet { get; set; }
         public Repository(TdbContext dbContext)
         {
-            _dbContext = dbContext;
+            DbContext = dbContext;
 
-            _dbSet= _dbContext.Set<Tentity>();
+            _dbSet= DbContext.Set<Tentity>();
         }
 
          public IList<Tentity> GetAll()
         {
-            var query = from corporateDiscountEntity in _dbContext.Set<CorporateDiscountEntity>()
-                        join firm in _dbContext.Set<FirmEntity>() on corporateDiscountEntity.FirmId equals firm.Id
-                        join discountScope in _dbContext.Set<DiscountScopeEntity>() on corporateDiscountEntity.ScopeId equals discountScope.Id
-                           
+            var query = from corporateDiscountEntity in DbContext.Set<CorporateDiscountEntity>()
+                        join firm in DbContext.Set<FirmEntity>() on true equals true
+                        join discountScope in DbContext.Set<DiscountScopeEntity>() on true equals true
+                        where true
                         select new { firmid= corporateDiscountEntity.FirmId, firmame= firm.Name,discountScope.Name };
             
 
