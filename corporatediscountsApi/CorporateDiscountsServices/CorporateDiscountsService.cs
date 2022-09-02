@@ -3,6 +3,8 @@ using corporatediscountsApi.Entities;
 using corporatediscountsApi.DbContexts;
 using System.Linq.Expressions;
 using corporatediscountsApi.Models;
+using System.Text.Json;
+using Microsoft.EntityFrameworkCore;
 
 namespace corporatediscountsApi.CorporateDiscountsServices
 {
@@ -16,21 +18,19 @@ namespace corporatediscountsApi.CorporateDiscountsServices
 
         }
 
-        public IList<CorporateDiscountEntity> GetAllDiscounts()
-        {
-           return _repository.GetAll();
-        }
+    
 
 
-        public IList<CorporateDiscountEntity> GetDiscountsByFilter(DiscountSearchRequest filter)
+        public string GetDiscountsByFilter(DiscountSearchRequest filter)
         {
             var query = from corporateDiscount in _repository.DbContext.Set<CorporateDiscountEntity>()
                         join firm in _repository.DbContext.Set<FirmEntity>() on corporateDiscount.FirmId  equals firm.Id
                         join discountScope in _repository.DbContext.Set<DiscountScopeEntity>() on corporateDiscount.ScopeId equals discountScope.Id
-                        where (corporateDiscount.ScopeId == filter.DiscountScopeId && firm.Name ==  filter.FirmName)
-                        select new { FirmName= firm.Name, discountInfo= corporateDiscount.Description, DiscountScope= discountScope.Name };
-            var a = query.ToList();
-            return new List<CorporateDiscountEntity>();
+                        where ((filter.DiscountScopeId == null ? true: (corporateDiscount.ScopeId == filter.DiscountScopeId))  &&( filter.FirmName == null ? true : (firm.Name == filter.FirmName)))
+                        select new { firmName= firm.Name, discountInfo= corporateDiscount.Description, discountScope= discountScope.Name,validCities= corporateDiscount.ValidCities ,firmContact=firm.ContactInfo};
+            var searchResult = query.ToList();        
+            string jsonString = JsonSerializer.Serialize(searchResult);
+            return jsonString;
         }
     }
 }

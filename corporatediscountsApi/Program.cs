@@ -11,7 +11,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<PostgreDbContext>(item => item.UseNpgsql(
-    "User ID=postgres;Password=ZAQ12wsx;Server=127.0.0.1;Port=5433;Database=postgres;Integrated Security=true;Pooling=true;"));
+    "User ID=postgres;Password=ZAQ12wsx;Server=127.0.0.1;Port=5432;Database=postgres;Integrated Security=true;Pooling=true;"));
 builder.Services.AddScoped<CorporateDiscountsService, CorporateDiscountsService>();
 builder.Services.AddScoped (typeof(IRepository<,>), typeof(Repository<,>));
 
