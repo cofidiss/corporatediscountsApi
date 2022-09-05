@@ -32,5 +32,17 @@ namespace corporatediscountsApi.CorporateDiscountsServices
             string jsonString = JsonSerializer.Serialize(searchResult);
             return jsonString;
         }
+
+        public  string GetDiscountScopeLov()
+        {
+
+
+            var query = from discountScope in _repository.DbContext.Set<DiscountScopeEntity>()
+                        select new { discountScopeId = discountScope.Id, discountScopeName = discountScope.Name };
+            var searchResult = query.ToList();
+            string jsonString = JsonSerializer.Serialize(searchResult);
+            return jsonString;
+
+        }
     }
 }

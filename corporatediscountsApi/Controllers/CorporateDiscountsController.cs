@@ -29,5 +29,14 @@ namespace corporatediscountsApi.Controllers
 
 
         }
+
+        [HttpPost("/GetDiscountScopeLov")]
+        public IActionResult GetDiscountScopeLov()
+        {
+            return Ok(_corporateDiscountsService.GetDiscountScopeLov());
+
+
+        }
+
     }
 }
