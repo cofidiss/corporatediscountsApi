@@ -14,7 +14,7 @@ namespace corporatediscountsApi.Controllers
         {
             _corporateDiscountsService = corporateDiscountsService;
         }
-        [HttpGet("/GetAllDiscounts")]
+        [HttpPost("/GetAllDiscounts")]
         public IActionResult GetAllDiscounts()
         {
            return Ok(_corporateDiscountsService.GetDiscountsByFilter(new DiscountSearchRequest()));
