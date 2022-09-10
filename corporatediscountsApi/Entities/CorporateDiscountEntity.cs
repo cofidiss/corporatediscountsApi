@@ -2,6 +2,8 @@
 {
     public class CorporateDiscountEntity
     {
+
+        public int DiscountId { get; set; }
         public int FirmId { get; set; }
         public string Description { get; set; }
 

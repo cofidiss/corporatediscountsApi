@@ -14,7 +14,7 @@ namespace corporatediscountsApi.Mappings
             builder.Property(x=>x.Description).HasColumnName("description");
             builder.Property(x => x.ScopeId).HasColumnName("scope_id");
             builder.Property(x => x.ValidCities).HasColumnName("valid_cities");
-       
+            builder.Property(x => x.DiscountId).HasColumnName("discount_id");
         }
     }
 }
