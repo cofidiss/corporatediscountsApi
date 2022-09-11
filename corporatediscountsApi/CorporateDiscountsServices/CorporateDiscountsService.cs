@@ -27,7 +27,8 @@ namespace corporatediscountsApi.CorporateDiscountsServices
                         join firm in _repository.DbContext.Set<FirmEntity>() on corporateDiscount.FirmId  equals firm.Id
                         join discountScope in _repository.DbContext.Set<DiscountScopeEntity>() on corporateDiscount.ScopeId equals discountScope.Id
                         where ((filter.DiscountScopeId == null ? true: (corporateDiscount.ScopeId == filter.DiscountScopeId))  &&( filter.FirmName == null ? true : (firm.Name == filter.FirmName)))
-                        select new { discountId= corporateDiscount.DiscountId, firmName= firm.Name, discountInfo= corporateDiscount.Description, discountScope= discountScope.Name,validCities= corporateDiscount.ValidCities ,firmContact=firm.ContactInfo};
+                        select new { discountId= corporateDiscount.DiscountId, firmName= firm.Name, discountInfo= corporateDiscount.Description, discountScopeId = discountScope.Id, 
+                            discountScope = discountScope.Name,validCities= corporateDiscount.ValidCities ,firmContact=firm.ContactInfo};
             var searchResult = query.ToList();        
             string jsonString = JsonSerializer.Serialize(searchResult);
             return jsonString;

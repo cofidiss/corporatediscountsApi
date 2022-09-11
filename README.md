@@ -1,4 +1,4 @@
-# corporatediscountsApi[kurumsal.indirm.mockup.docx](https://github.com/cofidiss/corporatediscountsApi/files/9540507/kurumsal.indirm.mockup.docx)
+n# corporatediscountsApi[kurumsal.indirm.mockup.docx](https://github.com/cofidiss/corporatediscountsApi/files/9540507/kurumsal.indirm.mockup.docx)
 
  (https://github.com/cofidiss/corporatediscountsApi/files/9453222/kurumsal.indirm.mockup.docx)
 
