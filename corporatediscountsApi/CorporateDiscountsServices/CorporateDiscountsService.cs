@@ -45,5 +45,34 @@ namespace corporatediscountsApi.CorporateDiscountsServices
             return jsonString;
 
         }
+
+        internal string SaveDiscounts(SaveDiscountsRequest[] saveDiscountsRequests)
+        { var corporateDiscountDbSet =  _repository.DbContext.Set<CorporateDiscountEntity>();
+
+            foreach (var saveDiscountsRequest in saveDiscountsRequests)
+            {
+                var query = from corporateDiscount in corporateDiscountDbSet
+                            where corporateDiscount.DiscountId == saveDiscountsRequest.DiscountId
+                            select corporateDiscount;
+              var corporateDiscountList =  query.ToList();
+                if (corporateDiscountList.Count > 1)
+                {
+                    throw new Exception($"DiscountId: {saveDiscountsRequest.DiscountId} icin birden cok satir geldi");
+
+                }
+            var corporateDiscountEntity = corporateDiscountList[0];
+
+                corporateDiscountEntity.ValidCities = saveDiscountsRequest.ValidCities;
+                corporateDiscountEntity.Description = saveDiscountsRequest.DiscountInfo;
+                corporateDiscountEntity.ScopeId = saveDiscountsRequest.DiscountScopeId;
+
+
+                corporateDiscountDbSet.Update(corporateDiscountEntity);
+                _repository.DbContext.SaveChanges();
+            }
+
+
+            return "";
+        }
     }
 }
