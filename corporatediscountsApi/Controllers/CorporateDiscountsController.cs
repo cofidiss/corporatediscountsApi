@@ -46,5 +46,14 @@ namespace corporatediscountsApi.Controllers
 
         }
 
+
+        [HttpPost("/FirmSelectLov")]
+        public IActionResult FirmSelectLov()
+        {
+            return Ok(_corporateDiscountsService.FirmSelectLov());
+
+
+        }
+
     }
 }

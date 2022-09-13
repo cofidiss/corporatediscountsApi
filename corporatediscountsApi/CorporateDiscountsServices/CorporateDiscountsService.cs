@@ -35,6 +35,17 @@ namespace corporatediscountsApi.CorporateDiscountsServices
             return jsonString;
         }
 
+        public string FirmSelectLov()
+        {
+
+            var query = from firm in _repository.DbContext.Set<FirmEntity>()
+                        select new { firmId = firm.Id, firmName = firm.Name,firmContact=firm.ContactInfo };
+            var searchResult = query.ToList();
+            string jsonString = JsonSerializer.Serialize(searchResult);
+            return jsonString;
+
+        }
+
         public  string GetDiscountScopeLov()
         {
 

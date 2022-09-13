@@ -11,4 +11,4 @@
         public string ValidCities { get; set; }
 
     }
-}
+}    
