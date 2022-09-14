@@ -1,5 +1,6 @@
 ﻿using corporatediscountsApi.Mappings;
 using Microsoft.EntityFrameworkCore;
+using System.Diagnostics;
 
 namespace corporatediscountsApi.DbContexts
 {
@@ -9,7 +10,12 @@ namespace corporatediscountsApi.DbContexts
         {
 
         }
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder.EnableSensitiveDataLogging().LogTo(message => Debug.WriteLine(message));
 
+
+        }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfiguration(new CorporateDiscountMap());

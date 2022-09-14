@@ -39,7 +39,7 @@ namespace corporatediscountsApi.Controllers
         }
 
         [HttpPost("/SaveDiscounts")]
-        public IActionResult SaveDiscounts(SaveDiscountsRequest[] saveDiscountsRequest)
+        public IActionResult SaveDiscounts(SaveDiscountsRequest saveDiscountsRequest)
         {
             return Ok(_corporateDiscountsService.SaveDiscounts(saveDiscountsRequest));
 

@@ -58,31 +58,63 @@ namespace corporatediscountsApi.CorporateDiscountsServices
 
         }
 
-        internal string SaveDiscounts(SaveDiscountsRequest[] saveDiscountsRequests)
+        internal string SaveDiscounts(SaveDiscountsRequest saveDiscountsRequest)
         { var corporateDiscountDbSet =  _repository.DbContext.Set<CorporateDiscountEntity>();
 
-            foreach (var saveDiscountsRequest in saveDiscountsRequests)
+            foreach (var updatedDiscountRow in saveDiscountsRequest.UpdatedDiscountRows)
             {
                 var query = from corporateDiscount in corporateDiscountDbSet
-                            where corporateDiscount.DiscountId == saveDiscountsRequest.DiscountId
+                            where corporateDiscount.DiscountId == updatedDiscountRow.DiscountId
                             select corporateDiscount;
               var corporateDiscountList =  query.ToList();
                 if (corporateDiscountList.Count > 1)
                 {
-                    throw new Exception($"DiscountId: {saveDiscountsRequest.DiscountId} icin birden cok satir geldi");
+                    throw new Exception($"DiscountId: {updatedDiscountRow.DiscountId} icin birden cok satir geldi");
 
                 }
             var corporateDiscountEntity = corporateDiscountList[0];
 
-                corporateDiscountEntity.ValidCities = saveDiscountsRequest.ValidCities;
-                corporateDiscountEntity.Description = saveDiscountsRequest.DiscountInfo;
-                corporateDiscountEntity.ScopeId = saveDiscountsRequest.DiscountScopeId;
+                corporateDiscountEntity.ValidCities = updatedDiscountRow.ValidCities;
+                corporateDiscountEntity.Description = updatedDiscountRow.DiscountInfo;
+                corporateDiscountEntity.ScopeId = updatedDiscountRow.DiscountScopeId;
 
 
                 corporateDiscountDbSet.Update(corporateDiscountEntity);
                 _repository.DbContext.SaveChanges();
             }
 
+
+            foreach (var insertedDiscountRow in saveDiscountsRequest.InsertedDiscountRows)
+            {
+
+
+                CorporateDiscountEntity corporateDiscountEntity = new CorporateDiscountEntity();
+                corporateDiscountEntity.ValidCities = insertedDiscountRow.ValidCities;
+                corporateDiscountEntity.Description = insertedDiscountRow.DiscountInfo;
+                corporateDiscountEntity.ScopeId = insertedDiscountRow.DiscountScopeId;
+                corporateDiscountEntity.FirmId = insertedDiscountRow.FirmId;
+
+                corporateDiscountDbSet.Add(corporateDiscountEntity);
+                _repository.DbContext.SaveChanges();
+            }
+
+
+            foreach (var deletedDiscountRow in saveDiscountsRequest.DeletedDiscountRows)
+            {
+
+                var query = from corporateDiscount in corporateDiscountDbSet
+                            where corporateDiscount.DiscountId == deletedDiscountRow
+                            select corporateDiscount;
+                var corporateDiscountList = query.ToList();
+                if (corporateDiscountList.Count > 1)
+                {
+                    throw new Exception($"DiscountId: {deletedDiscountRow} icin birden cok satir geldi");
+
+                }
+
+                corporateDiscountDbSet.Remove(corporateDiscountList[0]);
+                _repository.DbContext.SaveChanges();
+            }
 
             return " ";
         }

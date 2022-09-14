@@ -2,11 +2,10 @@
 {
     public class SaveDiscountsRequest
     {
+        public InsertedDiscountRow[] InsertedDiscountRows { get; set; }
+        public UpdatedDiscountRow[] UpdatedDiscountRows { get; set; }
 
-        public int DiscountId { get; set; }
-        public string DiscountInfo { get; set; }
-        public int DiscountScopeId { get; set; }
-        public string ValidCities { get; set; }
+        public int[] DeletedDiscountRows { get; set; }
     }
 }
     
