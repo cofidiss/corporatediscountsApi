@@ -55,5 +55,22 @@ namespace corporatediscountsApi.Controllers
 
         }
 
+        [HttpPost("/GetFirms")]
+        public IActionResult GetFirms()
+        {
+            return Ok(_corporateDiscountsService.GetFirms());
+
+
+        }
+
+
+        [HttpPost("/SaveFirms")]
+        public IActionResult SaveFirms(SaveFirmRequest saveFirmRequest)
+        {
+            return Ok(_corporateDiscountsService.SaveFirms(saveFirmRequest));
+
+
+        }
+
     }
 }

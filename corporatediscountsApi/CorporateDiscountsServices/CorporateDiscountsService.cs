@@ -35,6 +35,82 @@ namespace corporatediscountsApi.CorporateDiscountsServices
             return jsonString;
         }
 
+        internal string GetFirms()
+        {
+
+            var query = from firm in _repository.DbContext.Set<FirmEntity>()
+                        orderby firm.Id
+                        select firm;
+            var searchResult = query.ToList();
+            var serializeOptions = new JsonSerializerOptions
+            {
+                PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+                WriteIndented = true
+            };
+            string jsonString = JsonSerializer.Serialize(searchResult, serializeOptions);
+            return jsonString;
+
+        }
+
+        internal object? SaveFirms(SaveFirmRequest saveFirmRequest)
+        {
+            var firmDbSet = _repository.DbContext.Set<FirmEntity>();
+
+            foreach (var updatedFirmRow in saveFirmRequest.UpdatedFirmRows)
+            {
+                var query = from firm in firmDbSet
+                            where firm.Id == updatedFirmRow.FirmId
+                            select firm;
+                var firmList = query.ToList();
+                if (firmList.Count > 1)
+                {
+                    throw new Exception($"DiscountId: {updatedFirmRow.FirmId} icin birden cok satir geldi");
+
+                }
+                var firmEntity = firmList[0];
+
+                firmEntity.Name = updatedFirmRow.FirmName;
+                firmEntity.ContactInfo = updatedFirmRow.FirmContact;
+
+
+                firmDbSet.Update(firmEntity);
+                _repository.DbContext.SaveChanges();
+            }
+
+
+            foreach (var insertedFirmRow in saveFirmRequest.InsertedFirmRows)
+            {
+
+
+                FirmEntity firmEntity = new FirmEntity();
+                firmEntity.Name = insertedFirmRow.FirmName;
+                firmEntity.ContactInfo = insertedFirmRow.FirmContact;
+
+
+                firmDbSet.Add(firmEntity);
+                _repository.DbContext.SaveChanges();
+            }
+
+
+            foreach (var deletedFirmRow in saveFirmRequest.DeletedFirmRows)
+            {
+
+                var query = from firm in firmDbSet
+                            where firm.Id == deletedFirmRow
+                            select firm;
+                var firmList = query.ToList();
+                if (firmList.Count > 1)
+                {
+                    throw new Exception($"firmId: {deletedFirmRow} icin birden cok satir geldi");
+
+                }
+
+                firmDbSet.Remove(firmList[0]);
+                _repository.DbContext.SaveChanges();
+            }
+            return "ok";
+        }
+
         public string FirmSelectLov()
         {
 
