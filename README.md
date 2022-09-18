@@ -1,6 +1,5 @@
-n# corporatediscountsApi[kurumsal.indirm.mockup.docx](https://github.com/cofidiss/corporatediscountsApi/files/9540507/kurumsal.indirm.mockup.docx)
+[kurumsal.indirm.mockup.docx](https://github.com/cofidiss/corporatediscountsApi/files/9594918/kurumsal.indirm.mockup.docx)
 
- (https://github.com/cofidiss/corporatediscountsApi/files/9453222/kurumsal.indirm.mockup.docx)
 
 Öğrenilmiş bilgiler
 Postgre
