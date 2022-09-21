@@ -1,6 +1,6 @@
 ﻿namespace corporatediscountsApi.Entities
 {
-    public class FirmCategoryEntity
+    public class DiscpuntCategoryEntity
     {
 
         public int Id { get; set; }

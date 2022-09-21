@@ -55,6 +55,14 @@ namespace corporatediscountsApi.Controllers
 
         }
 
+        [HttpPost("/GetDiscountCategoryLov")]
+        public IActionResult GetDiscountCategoryLov()
+        {
+            return Ok(_corporateDiscountsService.GetDiscountCategoryLov());
+
+
+        }
+
         [HttpPost("/GetFirms")]
         public IActionResult GetFirms()
         {
