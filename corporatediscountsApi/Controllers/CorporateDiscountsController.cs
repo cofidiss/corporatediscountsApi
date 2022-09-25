@@ -14,54 +14,50 @@ namespace corporatediscountsApi.Controllers
         {
             _corporateDiscountsService = corporateDiscountsService;
         }
-        [HttpPost("/GetAllDiscounts")]
-        public IActionResult GetAllDiscounts()
+
+
+        [HttpPost(nameof(FilterDiscounts))]
+        public IActionResult FilterDiscounts(DiscountSearchRequest discountSearchRequest)
         {
-           return Ok(_corporateDiscountsService.GetDiscountsByFilter(new DiscountSearchRequest()));
+           
+            return Ok(_corporateDiscountsService.FilterDiscounts(discountSearchRequest));
 
 
         }
 
-        [HttpPost("/GetDiscountsByFilter")]
-        public IActionResult GetDiscountsByFilter(DiscountSearchRequest discountSearchRequest)
-        {
-            return Ok(_corporateDiscountsService.GetDiscountsByFilter(discountSearchRequest));
-
-
-        }
-
-        [HttpPost("/GetDiscountScopeLov")]
-        public IActionResult GetDiscountScopeLov()
+        [HttpPost(nameof(DiscountScopeLov))]
+        public IActionResult DiscountScopeLov()
         {
             return Ok(_corporateDiscountsService.GetDiscountScopeLov());
 
 
         }
 
-        [HttpPost("/SaveDiscounts")]
-        public IActionResult SaveDiscounts(SaveDiscountsRequest saveDiscountsRequest)
+        //[HttpPost("/SaveDiscounts")]
+        //public IActionResult SaveDiscounts(SaveDiscountsRequest saveDiscountsRequest)
+        //{
+        //    return Ok(_corporateDiscountsService.SaveDiscounts(saveDiscountsRequest));
+
+
+        //}
+
+
+        [HttpPost(nameof(FirmLov))]
+        public IActionResult FirmLov()
         {
-            return Ok(_corporateDiscountsService.SaveDiscounts(saveDiscountsRequest));
+            return Ok(_corporateDiscountsService.FirmLov());
 
 
         }
 
-
-        [HttpPost("/FirmSelectLov")]
-        public IActionResult FirmSelectLov()
+        [HttpPost(nameof(DiscountCategoryLov))]
+        public IActionResult DiscountCategoryLov()
         {
-            return Ok(_corporateDiscountsService.FirmSelectLov());
+            return Ok(_corporateDiscountsService.DiscountCategoryLov());
 
 
         }
 
-        [HttpPost("/GetDiscountCategoryLov")]
-        public IActionResult GetDiscountCategoryLov()
-        {
-            return Ok(_corporateDiscountsService.GetDiscountCategoryLov());
-
-
-        }
 
         [HttpPost("/GetFirms")]
         public IActionResult GetFirms()

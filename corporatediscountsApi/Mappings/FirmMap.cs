@@ -13,7 +13,7 @@ namespace corporatediscountsApi.Mappings
             builder.Property(x => x.Id).HasColumnName("id");
             builder.Property(x => x.Name).HasColumnName("name");
             builder.Property(x => x.ContactInfo).HasColumnName("contact_info");
-            builder.Property(x => x.CategoryId).HasColumnName("category_id");
+ 
             
         }
     

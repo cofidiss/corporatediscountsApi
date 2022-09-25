@@ -7,7 +7,7 @@
         public string Name { get; set; }
 
         public string ContactInfo { get; set; }
-        public int CategoryId { get; set; }
+
 
     }
 }

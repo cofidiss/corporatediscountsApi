@@ -2,7 +2,8 @@
 {
     public class DiscountSearchRequest
     {
-        public string? FirmName { get; set; }
+        public int? FirmId { get; set; }
         public int? DiscountScopeId { get; set; }
+        public int? DiscountCategoryId { get; set; }
     }
 }

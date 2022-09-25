@@ -21,7 +21,7 @@ namespace corporatediscountsApi.DbContexts
             modelBuilder.ApplyConfiguration(new CorporateDiscountMap());
             modelBuilder.ApplyConfiguration(new FirmMap());
             modelBuilder.ApplyConfiguration(new DiscountScopeMap());
-
+            modelBuilder.ApplyConfiguration(new DiscountCategoryMap());
             base.OnModelCreating(modelBuilder);
         }
 
