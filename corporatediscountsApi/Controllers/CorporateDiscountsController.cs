@@ -27,7 +27,9 @@ namespace corporatediscountsApi.Controllers
 
         [HttpPost(nameof(DiscountScopeLov))]
         public IActionResult DiscountScopeLov()
+        
         {
+            //throw new Exception("a");
             return Ok(_corporateDiscountsService.GetDiscountScopeLov());
 
 

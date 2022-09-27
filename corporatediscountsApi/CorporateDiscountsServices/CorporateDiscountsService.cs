@@ -23,16 +23,26 @@ namespace corporatediscountsApi.CorporateDiscountsServices
 
         public string FilterDiscounts(DiscountSearchRequest filter)
         {
+           
+            var childCategoriesQuery = from discountCategory in _repository.DbContext.Set<DiscountCategoryEntity>()
+                                       where discountCategory.ParentId == filter.DiscountCategoryId
+                                       select discountCategory.Id;
+
+         IList<int> childCategoryIds =    childCategoriesQuery.ToList();
+            childCategoryIds.Add(filter.DiscountCategoryId);
+
+
             var query = from corporateDiscount in _repository.DbContext.Set<CorporateDiscountEntity>()
                         join firm in _repository.DbContext.Set<FirmEntity>() on corporateDiscount.FirmId  equals firm.Id
                         join discountScope in _repository.DbContext.Set<DiscountScopeEntity>() on corporateDiscount.ScopeId equals discountScope.Id
+                        join discountCategory in _repository.DbContext.Set<DiscountCategoryEntity>() on corporateDiscount.CategoryId equals discountCategory.Id
                         where ((filter.DiscountScopeId == -1 ? true: (corporateDiscount.ScopeId == filter.DiscountScopeId))  &&
-                        ( filter.DiscountCategoryId == -1 ? true : (corporateDiscount.CategoryId == filter.DiscountCategoryId)) &&
+                        ( filter.DiscountCategoryId == -1 ? true : (childCategoryIds.Contains(corporateDiscount.CategoryId))) &&
 
                         (filter.FirmId == -1 ? true : (corporateDiscount.FirmId == filter.FirmId)))
                         orderby corporateDiscount.Id ascending 
                         select new { id= corporateDiscount.Id, firmName= firm.Name, discountDescription= corporateDiscount.Description, discountScopeId = discountScope.Id, 
-                            discountScopeName = discountScope.Name,firmContact=firm.ContactInfo};
+                            discountScopeName = discountScope.Name,firmContact=firm.ContactInfo, discountCategoryName = discountCategory.Name};
             var searchResult = query.ToList();        
             string jsonString = JsonSerializer.Serialize(searchResult);
             return jsonString;
@@ -42,7 +52,8 @@ namespace corporatediscountsApi.CorporateDiscountsServices
         {
             var query = from discountCategory in _repository.DbContext.Set<DiscountCategoryEntity>()
                         orderby discountCategory.Id
-                        select new {id= discountCategory.Id,name= discountCategory.Name,parentId= discountCategory.ParentId };
+                        select new {id= discountCategory.Id,name= discountCategory.Name,parentId= discountCategory.ParentId ,
+                            levelNo= discountCategory.ParentId == null ? 1:2 };
         
             var searchResult = query.ToList();
             var jsonString = JsonSerializer.Serialize(searchResult);
