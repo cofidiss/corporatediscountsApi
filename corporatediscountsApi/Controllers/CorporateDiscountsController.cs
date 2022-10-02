@@ -19,6 +19,7 @@ namespace corporatediscountsApi.Controllers
         [HttpPost(nameof(FilterDiscounts))]
         public IActionResult FilterDiscounts(DiscountSearchRequest discountSearchRequest)
         {
+            throw new Exception("");
            
             return Ok(_corporateDiscountsService.FilterDiscounts(discountSearchRequest));
 

@@ -1,4 +1,5 @@
 using corporatediscountsApi.CorporateDiscountsServices;
+using corporatediscountsApi.CorporateDiscountsAdminServices;
 using corporatediscountsApi.DbContexts;
 using corporatediscountsApi.Repositories;
 using Microsoft.EntityFrameworkCore;
@@ -13,6 +14,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<PostgreDbContext>(item => item.UseNpgsql(
     "User ID=postgres;Password=ZAQ12wsx;Server=localhost;Port=5432;Database=postgres;Integrated Security=true;Pooling=true;"));
 builder.Services.AddScoped<CorporateDiscountsService, CorporateDiscountsService>();
+builder.Services.AddScoped<CorporateDiscountsAdminService, CorporateDiscountsAdminService>();
 builder.Services.AddScoped (typeof(IRepository<,>), typeof(Repository<,>));
 
 var app = builder.Build();
