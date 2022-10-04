@@ -4,7 +4,7 @@ using corporatediscountsApi.Models;
 using Microsoft.AspNetCore.Mvc;
 namespace corporatediscountsApi.Controllers
 {
-    [Route("api/{controller}")]
+    [Route("api/[controller]")]
     [ApiController]
     public class CorporateDiscountsAdminController:ControllerBase
     {
@@ -37,6 +37,24 @@ namespace corporatediscountsApi.Controllers
         {
             return Ok(_corporateDiscountsAdminService.GetDiscountCategoryLov());
             
+
+
+        }
+        [HttpPost(nameof(FilterDiscounts))]
+        public IActionResult FilterDiscounts(DiscountSearchRequest discountSearchRequest)
+        {
+            //throw new Exception("");
+
+            return Ok(_corporateDiscountsAdminService.FilterDiscounts(discountSearchRequest));
+
+
+        }
+
+
+        [HttpPost(nameof(SaveDiscounts))]
+        public IActionResult SaveDiscounts(SaveDiscountsRequest saveDiscountsRequest)
+        {
+            return Ok(_corporateDiscountsAdminService.SaveDiscounts(saveDiscountsRequest));
 
 
         }

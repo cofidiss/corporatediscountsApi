@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace corporatediscountsApi.Controllers
 {
-    [Route("api/{controller}")]
+    [Route("api/[controller]")]
     [ApiController]
     public class CorporateDiscountsController : ControllerBase
     {
