@@ -50,7 +50,13 @@ namespace corporatediscountsApi.Controllers
 
         }
 
+        [HttpPost(nameof(SaveFirms))]
+        public IActionResult SaveFirms(SaveFirmRequest saveFirmRequest)
+        {
+            return Ok(_corporateDiscountsAdminService.SaveFirms(saveFirmRequest));
 
+
+        }
         [HttpPost(nameof(SaveDiscounts))]
         public IActionResult SaveDiscounts(SaveDiscountsRequest saveDiscountsRequest)
         {

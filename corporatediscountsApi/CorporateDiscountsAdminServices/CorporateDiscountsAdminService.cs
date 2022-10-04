@@ -167,5 +167,64 @@ namespace corporatediscountsApi.CorporateDiscountsAdminServices
                 return "Başarıyla Kaydedildi";
             }
         }
+
+        internal string SaveFirms(SaveFirmRequest saveFirmRequest)
+        {
+            var firmDbSet = _dbContext.Set<FirmEntity>();
+
+            foreach (var updatedFirmRow in saveFirmRequest.UpdatedFirmRows)
+            {
+                var query = from firm in firmDbSet
+                            where firm.Id == updatedFirmRow.FirmId
+                            select firm;
+                var firmList = query.ToList();
+                if (firmList.Count > 1)
+                {
+                    throw new Exception($"DiscountId: {updatedFirmRow.FirmId} icin birden cok satir geldi");
+
+                }
+                var firmEntity = firmList[0];
+
+                firmEntity.Name = updatedFirmRow.FirmName;
+                firmEntity.ContactInfo = updatedFirmRow.FirmContact;
+
+
+                firmDbSet.Update(firmEntity);
+                _dbContext.SaveChanges();
+            }
+
+
+            foreach (var insertedFirmRow in saveFirmRequest.InsertedFirmRows)
+            {
+
+
+                FirmEntity firmEntity = new FirmEntity();
+                firmEntity.Name = insertedFirmRow.FirmName;
+                firmEntity.ContactInfo = insertedFirmRow.FirmContact;
+
+
+                firmDbSet.Add(firmEntity);
+                _dbContext.SaveChanges();
+            }
+
+
+            foreach (var deletedFirmRow in saveFirmRequest.DeletedFirmRows)
+            {
+
+                var query = from firm in firmDbSet
+                            where firm.Id == deletedFirmRow
+                            select firm;
+                var firmList = query.ToList();
+                if (firmList.Count > 1)
+                {
+                    throw new Exception($"firmId: {deletedFirmRow} icin birden cok satir geldi");
+
+                }
+
+                firmDbSet.Remove(firmList[0]);
+                _dbContext.SaveChanges();
+            }
+            return "Firmalar Kaydedildi";
+        }
     }
 }
