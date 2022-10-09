@@ -90,11 +90,13 @@ namespace corporatediscountsApi.CorporateDiscountsAdminServices
                         {
                             id = corporateDiscount.Id,
                             firmName = firm.Name,
+                            firmId = corporateDiscount.FirmId,
                             discountDescription = corporateDiscount.Description,
                             discountScopeId = discountScope.Id,
                             discountScopeName = discountScope.Name,
                             firmContact = firm.ContactInfo,
-                            discountCategoryName = discountCategory.Name
+                            discountCategoryName = discountCategory.Name,
+                            discountCategoryId = corporateDiscount.CategoryId
                         };
             var searchResult = query.ToList();
             string jsonString = JsonSerializer.Serialize(searchResult);
