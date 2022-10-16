@@ -1,6 +1,7 @@
 
 
-[kurumsal.indirm.mockup.docx](https://github.com/cofidiss/corporatediscountsApi/files/9692354/kurumsal.indirm.mockup.docx)
+[kurumsal.indirm.mockup.docx](https://github.com/cofidiss/corporatediscountsApi/files/9794423/kurumsal.indirm.mockup.docx)
+
 
 
 Öğrenilmiş bilgiler
