@@ -64,5 +64,21 @@ namespace corporatediscountsApi.Controllers
 
 
         }
+
+        [HttpPost(nameof(UpdateDiscounts))]
+        public IActionResult UpdateDiscounts(UpdatedDiscountRow updateDiscountsRequest)
+        {
+            try { _corporateDiscountsAdminService.UpdateDiscounts(updateDiscountsRequest); }
+            catch (Exception e)
+            {
+                Response.StatusCode = 500;
+                return Content("İndirim kayıt edilemedi");
+
+            }
+          
+            return Ok("İndirim Güncellendi");
+
+
+        }
     }
 }
