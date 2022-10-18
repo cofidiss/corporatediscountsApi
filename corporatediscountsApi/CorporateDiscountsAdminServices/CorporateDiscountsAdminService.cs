@@ -66,40 +66,6 @@ namespace corporatediscountsApi.CorporateDiscountsAdminServices
 
         }
 
-        internal object? UpdateDiscounts(UpdatedDiscountRow updateDiscountsRequest)
-        {
-            {  
-                var corporateDiscountDbSet = _dbContext.Set<CorporateDiscountEntity>();
-
-              
-                    var query = from corporateDiscount in corporateDiscountDbSet
-                                where corporateDiscount.Id == updateDiscountsRequest.DiscountId
-                                select corporateDiscount;
-                    var corporateDiscountList = query.ToList();
-                    if (corporateDiscountList.Count > 1)
-                    {
-                        throw new Exception($"DiscountId: {updateDiscountsRequest.DiscountId} icin birden cok satir geldi");
-
-                    }
-                    var corporateDiscountEntity = corporateDiscountList[0];
-
-                    corporateDiscountEntity.CategoryId = updateDiscountsRequest.DiscountCategoryId;
-                    corporateDiscountEntity.Description = updateDiscountsRequest.DiscountInfo;
-                    corporateDiscountEntity.ScopeId = updateDiscountsRequest.DiscountScopeId;
-                    corporateDiscountEntity.FirmId = updateDiscountsRequest.FirmId;
-
-
-                    corporateDiscountDbSet.Update(corporateDiscountEntity);
-                    _dbContext.SaveChanges();
-                
-
-
-              
-
-                return "Başarıyla Kaydedildi";
-            }
-        }
-
         internal object? FilterDiscounts(DiscountSearchRequest filter)
         {
 
@@ -124,13 +90,11 @@ namespace corporatediscountsApi.CorporateDiscountsAdminServices
                         {
                             id = corporateDiscount.Id,
                             firmName = firm.Name,
-                            firmId = corporateDiscount.FirmId,
                             discountDescription = corporateDiscount.Description,
                             discountScopeId = discountScope.Id,
                             discountScopeName = discountScope.Name,
                             firmContact = firm.ContactInfo,
-                            discountCategoryName = discountCategory.Name,
-                            discountCategoryId = corporateDiscount.CategoryId
+                            discountCategoryName = discountCategory.Name
                         };
             var searchResult = query.ToList();
             string jsonString = JsonSerializer.Serialize(searchResult);
@@ -262,5 +226,71 @@ namespace corporatediscountsApi.CorporateDiscountsAdminServices
             }
             return "Firmalar Kaydedildi";
         }
+
+        internal object? UpdateDiscounts(UpdatedDiscountRow updateDiscountsRequest)
+        {
+            {
+                var corporateDiscountDbSet = _dbContext.Set<CorporateDiscountEntity>();
+
+
+                var query = from corporateDiscount in corporateDiscountDbSet
+                            where corporateDiscount.Id == updateDiscountsRequest.DiscountId
+                            select corporateDiscount;
+                var corporateDiscountList = query.ToList();
+                if (corporateDiscountList.Count > 1)
+                {
+                    throw new Exception($"DiscountId: {updateDiscountsRequest.DiscountId} icin birden cok satir geldi");
+
+                }
+                var corporateDiscountEntity = corporateDiscountList[0];
+
+                corporateDiscountEntity.CategoryId = updateDiscountsRequest.DiscountCategoryId;
+                corporateDiscountEntity.Description = updateDiscountsRequest.DiscountInfo;
+                corporateDiscountEntity.ScopeId = updateDiscountsRequest.DiscountScopeId;
+                corporateDiscountEntity.FirmId = updateDiscountsRequest.FirmId;
+
+
+                corporateDiscountDbSet.Update(corporateDiscountEntity);
+                _dbContext.SaveChanges();
+
+
+
+
+
+                return "Başarıyla Kaydedildi";
+            }
+        }
+        internal void DeleteDiscount(long discountId)
+        {
+
+            var query = from corporateDiscount in _dbContext.Set<CorporateDiscountEntity>()
+                        where corporateDiscount.Id == discountId
+                        select corporateDiscount;
+            var DicountList = query.ToList();
+            if (DicountList.Count > 1)
+            {
+                throw new Exception($"discountId: {discountId} icin birden cok satir geldi");
+
+            }
+
+            _dbContext.Set<CorporateDiscountEntity>().Remove(DicountList[0]);
+            _dbContext.SaveChanges();
+        }
+
+        internal void AddDiscount(InsertedDiscountRow insertedDiscountRow)
+        {
+
+            var corporateDiscountEntity = new CorporateDiscountEntity()
+            {
+                CategoryId = insertedDiscountRow.DiscountCategoryId,
+                Description = insertedDiscountRow.DiscountInfo,
+                FirmId = insertedDiscountRow.FirmId,
+                ScopeId = insertedDiscountRow.DiscountScopeId
+
+            };
+            _dbContext.Set<CorporateDiscountEntity>().Add(corporateDiscountEntity);
+            _dbContext.SaveChanges();
+        }
     }
-}
+    }
+

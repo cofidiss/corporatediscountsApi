@@ -80,5 +80,39 @@ namespace corporatediscountsApi.Controllers
 
 
         }
+
+        [HttpPost(nameof(DeleteDiscount))]
+        public IActionResult DeleteDiscount([FromBody] long discountId)
+        {
+            try { _corporateDiscountsAdminService.DeleteDiscount(discountId); }
+            catch (Exception e)
+            {
+                Response.StatusCode = 500;
+                return Content("İndirim silinemedi edilemedi");
+
+            }
+
+            return Ok("İndirim Silindi");
+
+
+        }
+
+        [HttpPost(nameof(AddDiscount))]
+        public IActionResult AddDiscount(InsertedDiscountRow insertedDiscountRow)
+        {
+            try { _corporateDiscountsAdminService.AddDiscount(insertedDiscountRow); }
+            catch (Exception e)
+            {
+                Response.StatusCode = 500;
+                return Content("İndirim eklenemdi edilemedi");
+
+            }
+
+            return Ok("İndirim Eklendi");
+
+
+        }
+        
+
     }
 }
