@@ -112,7 +112,18 @@ namespace corporatediscountsApi.Controllers
 
 
         }
+        [HttpPost(nameof(GetCategories))]
+        public IActionResult GetCategories()
+        {
+            var categories=  _corporateDiscountsAdminService.GetCategories();          
         
+
+            
+
+            return Ok(categories);
+
+
+        }
 
     }
 }

@@ -6,6 +6,7 @@ using corporatediscountsApi.Models;
 using System.Text.Json;
 using Microsoft.EntityFrameworkCore;
 using NuGet.Protocol.Core.Types;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace corporatediscountsApi.CorporateDiscountsAdminServices
 {
@@ -290,6 +291,20 @@ namespace corporatediscountsApi.CorporateDiscountsAdminServices
             };
             _dbContext.Set<CorporateDiscountEntity>().Add(corporateDiscountEntity);
             _dbContext.SaveChanges();
+        }
+
+        internal string GetCategories()
+        {
+            
+                var GetCategoriesquery = from DiscountCategory1 in _dbContext.Set<DiscountCategoryEntity>()
+                                         join DiscountCategory2 in _dbContext.Set<DiscountCategoryEntity>() on DiscountCategory1.ParentId equals DiscountCategory2.Id into grp1
+                                         from discountCategory in grp1.DefaultIfEmpty()
+                                         select new { categoryName= DiscountCategory1.Name, parentCategoryName= discountCategory.Name } ;
+            var categories = GetCategoriesquery.ToList();
+            string jsonString = JsonSerializer.Serialize(categories);
+            return jsonString;
+
+        
         }
     }
     }
