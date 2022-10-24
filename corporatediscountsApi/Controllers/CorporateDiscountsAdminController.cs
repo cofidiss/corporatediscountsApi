@@ -103,7 +103,9 @@ namespace corporatediscountsApi.Controllers
             try { _corporateDiscountsAdminService.AddDiscount(insertedDiscountRow); }
             catch (Exception e)
             {
+               
                 Response.StatusCode = 500;
+                
                 return Content("İndirim eklenemdi edilemedi");
 
             }
@@ -121,6 +123,25 @@ namespace corporatediscountsApi.Controllers
             
 
             return Ok(categories);
+
+
+        }
+
+        [HttpPost(nameof(UpdateCategory))]
+        public IActionResult UpdateCategory(UpdateCategoryRequest updateCategory)
+        {
+            try { _corporateDiscountsAdminService.UpdateCategory(updateCategory); }
+            catch (Exception e )
+            {
+                Response.StatusCode = 500;
+
+                return Content("Kategori güncellenemdi.");
+
+
+            }
+  
+
+            return Ok("Kategori güncellendi");
 
 
         }

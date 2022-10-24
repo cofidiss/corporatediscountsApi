@@ -7,6 +7,7 @@ using System.Text.Json;
 using Microsoft.EntityFrameworkCore;
 using NuGet.Protocol.Core.Types;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
+using Newtonsoft.Json.Serialization;
 
 namespace corporatediscountsApi.CorporateDiscountsAdminServices
 {
@@ -299,12 +300,39 @@ namespace corporatediscountsApi.CorporateDiscountsAdminServices
                 var GetCategoriesquery = from DiscountCategory1 in _dbContext.Set<DiscountCategoryEntity>()
                                          join DiscountCategory2 in _dbContext.Set<DiscountCategoryEntity>() on DiscountCategory1.ParentId equals DiscountCategory2.Id into grp1
                                          from discountCategory in grp1.DefaultIfEmpty()
-                                         select new { categoryName= DiscountCategory1.Name, parentCategoryName= discountCategory.Name } ;
+                                         orderby DiscountCategory1.Id
+                                         select new CategoryModel  { Id= DiscountCategory1.Id, CategoryName= DiscountCategory1.Name, ParentCategoryName= discountCategory.Name,ParentCategoryId= discountCategory.Id } ;
             var categories = GetCategoriesquery.ToList();
-            string jsonString = JsonSerializer.Serialize(categories);
+            string jsonString = JsonSerializer.Serialize(categories,new JsonSerializerOptions() { PropertyNamingPolicy= JsonNamingPolicy.CamelCase });
             return jsonString;
 
         
+        }
+
+        internal void UpdateCategory(UpdateCategoryRequest updateCategoryRequest)
+        {
+
+       var categoryQuery = from categoryEntity in _dbContext.Set<DiscountCategoryEntity>()
+            where categoryEntity.Id == updateCategoryRequest.Id
+            select categoryEntity;
+        var categoires =     categoryQuery.ToArray();
+            if (categoires.Length == 0)
+            {
+                throw new Exception($"categoryId {updateCategoryRequest.Id} bulunamadı");
+
+            }
+            if (categoires.Length > 1)
+            {
+                throw new Exception($"categoryId {updateCategoryRequest.Id} için birden çok satır geldi");
+
+            }
+            var categoiry =  categoires.First();
+            categoiry.Name = updateCategoryRequest.CategoryName;
+            categoiry.ParentId = updateCategoryRequest.ParentCategoryId;
+
+            _dbContext.Set<DiscountCategoryEntity>().Update(categoiry);
+            _dbContext.SaveChanges();
+
         }
     }
     }

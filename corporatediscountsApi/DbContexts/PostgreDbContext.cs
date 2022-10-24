@@ -12,6 +12,7 @@ namespace corporatediscountsApi.DbContexts
         }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
+            optionsBuilder.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
             optionsBuilder.EnableSensitiveDataLogging().LogTo(message => Debug.WriteLine(message));
 
 
