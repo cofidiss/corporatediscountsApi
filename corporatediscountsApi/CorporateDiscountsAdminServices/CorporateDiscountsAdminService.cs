@@ -334,6 +334,38 @@ namespace corporatediscountsApi.CorporateDiscountsAdminServices
             _dbContext.SaveChanges();
 
         }
+
+        internal void AddCategory(AddCategoryRequest addCategory)
+        {
+            var categoryEntity = new DiscountCategoryEntity();
+            categoryEntity.ParentId = addCategory.ParentCategoryId;
+            categoryEntity.Name = addCategory.CategoryName;
+
+            _dbContext.Set<DiscountCategoryEntity>().Add(categoryEntity);
+            _dbContext.SaveChanges();
+
+        }
+
+        internal void DeleteCategory(int categoryId)
+        {
+            var categoryQuery = from categoryEntity in _dbContext.Set<DiscountCategoryEntity>()
+                                where categoryEntity.Id == categoryId
+                                select categoryEntity;
+            var categoires = categoryQuery.ToArray();
+            if (categoires.Length == 0)
+            {
+                throw new Exception($"categoryId {categoryId} bulunamadı");
+
+            }
+            if (categoires.Length > 1)
+            {
+                throw new Exception($"categoryId {categoryId} için birden çok satır geldi");
+
+            }
+            var categoiry = categoires.First();
+            _dbContext.Set<DiscountCategoryEntity>().Remove(categoiry);
+            _dbContext.SaveChanges();
+        }
     }
     }
 

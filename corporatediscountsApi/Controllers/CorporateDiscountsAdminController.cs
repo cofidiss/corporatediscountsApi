@@ -117,12 +117,22 @@ namespace corporatediscountsApi.Controllers
         [HttpPost(nameof(GetCategories))]
         public IActionResult GetCategories()
         {
-            var categories=  _corporateDiscountsAdminService.GetCategories();          
-        
+            try { 
+            var categories=  _corporateDiscountsAdminService.GetCategories();
+                return Ok(categories);
+            }
+            catch ( Exception e)
+            {
+                Response.StatusCode = 500;
 
-            
+                return Content("Kategoriler indirilemedi.");
 
-            return Ok(categories);
+
+            }
+
+
+
+   
 
 
         }
@@ -146,5 +156,43 @@ namespace corporatediscountsApi.Controllers
 
         }
 
+        [HttpPost(nameof(AddCategory))]
+        public IActionResult AddCategory(AddCategoryRequest addCategory)
+        {
+            try { _corporateDiscountsAdminService.AddCategory(addCategory); }
+            catch (Exception e)
+            {
+                Response.StatusCode = 500;
+
+                return Content("Kategori eklenemedi.");
+
+
+            }
+
+
+            return Ok("Kategori eklendi");
+
+
+        }
+
+
+        [HttpPost(nameof(DeleteCategory))]
+        public IActionResult DeleteCategory([FromBody] int categoryId)
+        {
+            try { _corporateDiscountsAdminService.DeleteCategory(categoryId); }
+            catch (Exception e)
+            {
+                Response.StatusCode = 500;
+
+                return Content("Kategori silinemdei.");
+
+
+            }
+
+
+            return Ok("Kategori silindi");
+
+
+        }
     }
 }
