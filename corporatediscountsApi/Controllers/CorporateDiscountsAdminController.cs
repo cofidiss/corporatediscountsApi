@@ -31,6 +31,13 @@ namespace corporatediscountsApi.Controllers
 
 
         }
+        [HttpPost(nameof(GetFirms))]
+        public IActionResult GetFirms()
+        {
+            return Ok(_corporateDiscountsAdminService.GetFirms());
+
+
+        }
 
         [HttpPost(nameof(GetDiscountCategoryLov))]
         public IActionResult GetDiscountCategoryLov()
@@ -49,7 +56,52 @@ namespace corporatediscountsApi.Controllers
 
 
         }
+        [HttpPost(nameof(UpdateFirm))]
+        public IActionResult UpdateFirm(UpdateFirmRequest updateFirmRequest)
+        {
 
+            try { _corporateDiscountsAdminService.UpdateFirm(updateFirmRequest); }
+            catch (Exception e)
+            {
+                Response.StatusCode = 500;
+                return Content("firma güncellenemedi");
+
+            }
+
+            return Ok("firma Güncellendi");
+
+
+
+        }
+        [HttpPost(nameof(AddFirm))]
+        public IActionResult AddFirm(AddFirmRequest addFirmRequest)
+        {
+
+            try { _corporateDiscountsAdminService.AddFirm(addFirmRequest); }
+            catch (Exception e)
+            {
+                Response.StatusCode = 500;
+                return Content("firma eklenemdi");
+
+            }
+
+            return Ok("firma eklendi");
+        }
+        [HttpPost(nameof(DeleteFirm))]
+        public IActionResult DeleteFirm([FromBody] int firmId)
+        {
+
+            try { _corporateDiscountsAdminService.DeleteFirm(firmId); }
+            catch (Exception e)
+            {
+                Response.StatusCode = 500;
+                return Content("firma silinemdi");
+
+            }
+
+            return Ok("firma silindi");
+        }
+        
         [HttpPost(nameof(SaveFirms))]
         public IActionResult SaveFirms(SaveFirmRequest saveFirmRequest)
         {

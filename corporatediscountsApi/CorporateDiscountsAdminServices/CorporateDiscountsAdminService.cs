@@ -56,6 +56,20 @@ namespace corporatediscountsApi.CorporateDiscountsAdminServices
 
         }
 
+        internal string GetFirms()
+        {
+            var query = from firm in _dbContext.Set<FirmEntity>()
+                        orderby firm.Id
+                        select firm;
+            var searchResult = query.ToList();
+            var serializeOptions = new JsonSerializerOptions
+            {
+                PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+                WriteIndented = true
+            };
+            string jsonString = JsonSerializer.Serialize(searchResult, serializeOptions);
+            return jsonString;
+        }
         public string GetDiscountScopeLov()
         {
 
@@ -364,6 +378,64 @@ namespace corporatediscountsApi.CorporateDiscountsAdminServices
             }
             var categoiry = categoires.First();
             _dbContext.Set<DiscountCategoryEntity>().Remove(categoiry);
+            _dbContext.SaveChanges();
+        }
+
+        internal void UpdateFirm(UpdateFirmRequest updateFirmRequest)
+        {
+
+            var firmQuery = from firmEntity in _dbContext.Set<FirmEntity>()
+                                where firmEntity.Id == updateFirmRequest.Id
+                                select firmEntity;
+            var firms = firmQuery.ToArray();
+            if (firms.Length == 0)
+            {
+                throw new Exception($"firm id {updateFirmRequest.Id} bulunamadı");
+
+            }
+            if (firms.Length > 1)
+            {
+                throw new Exception($"categoryId {updateFirmRequest.Id} için birden çok satır geldi");
+
+            }
+            var firm = firms.First();
+            firm.Name = updateFirmRequest.FirmName;
+            firm.ContactInfo = updateFirmRequest.FirmContact;
+
+            _dbContext.Set<FirmEntity>().Update(firm);
+            _dbContext.SaveChanges();
+        }
+
+        internal void AddFirm(AddFirmRequest addFirmRequest)
+        {
+            var firm = new FirmEntity();
+
+            firm.Name = addFirmRequest.FirmName;
+            firm.ContactInfo = addFirmRequest.FirmContact;
+
+            _dbContext.Set<FirmEntity>().Add(firm);
+            _dbContext.SaveChanges();
+        }
+        internal void DeleteFirm(int firmId)
+        {
+            var firmQuery = from firmEntity in _dbContext.Set<FirmEntity>()
+                            where firmEntity.Id == firmId
+                            select firmEntity;
+            var firms = firmQuery.ToArray();
+            if (firms.Length == 0)
+            {
+                throw new Exception($"firm id {firmId} bulunamadı");
+
+            }
+            if (firms.Length > 1)
+            {
+                throw new Exception($"categoryId {firmId} için birden çok satır geldi");
+
+            }
+            var firm = firms.First();
+
+
+            _dbContext.Set<FirmEntity>().Remove(firm);
             _dbContext.SaveChanges();
         }
     }
