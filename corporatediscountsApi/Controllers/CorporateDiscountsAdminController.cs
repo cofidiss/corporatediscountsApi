@@ -14,6 +14,17 @@ namespace corporatediscountsApi.Controllers
             _corporateDiscountsAdminService = corporateDiscountsAdminService;
         }
 
+        [HttpPost(nameof(IsAdmin))]
+        public IActionResult IsAdmin()
+
+        {
+            //throw new Exception("a");
+            return Ok(false);
+
+
+        }
+
+
         [HttpPost(nameof(GetDiscountScopeLov))]
         public IActionResult GetDiscountScopeLov()
 
@@ -234,7 +245,16 @@ namespace corporatediscountsApi.Controllers
             try { _corporateDiscountsAdminService.DeleteCategory(categoryId); }
             catch (Exception e)
             {
+
+
+
+
+
                 Response.StatusCode = 500;
+
+
+
+
 
                 return Content("Kategori silinemdei.");
 
