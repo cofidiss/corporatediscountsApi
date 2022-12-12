@@ -19,11 +19,30 @@ namespace corporatediscountsApi.Controllers
 
         {
             //throw new Exception("a");
-            return Ok(false);
+            return Ok(true);
 
 
         }
 
+        
+        [HttpPost(nameof(GetUserInfo))]
+        public IActionResult GetUserInfo()
+
+        {
+            //throw new Exception("a");
+            return Ok(new {userName="sinan",isAdmin=false});
+
+
+        }
+        [HttpPost(nameof(Login))]
+        public IActionResult Login()
+
+        {
+            //throw new Exception("a");
+            return Ok(true);
+
+
+        }
 
         [HttpPost(nameof(GetDiscountScopeLov))]
         public IActionResult GetDiscountScopeLov()
