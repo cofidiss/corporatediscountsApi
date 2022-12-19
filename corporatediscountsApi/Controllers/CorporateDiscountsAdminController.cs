@@ -2,6 +2,8 @@
 using corporatediscountsApi.CorporateDiscountsServices;
 using corporatediscountsApi.Models;
 using Microsoft.AspNetCore.Mvc;
+using System.Net;
+
 namespace corporatediscountsApi.Controllers
 {
     [Route("api/[controller]")]
@@ -9,9 +11,11 @@ namespace corporatediscountsApi.Controllers
     public class CorporateDiscountsAdminController:ControllerBase
     {
         CorporateDiscountsAdminService _corporateDiscountsAdminService { get; }
-        public CorporateDiscountsAdminController(CorporateDiscountsAdminService corporateDiscountsAdminService)
+        IConfiguration _configuration { get; }
+        public CorporateDiscountsAdminController(CorporateDiscountsAdminService corporateDiscountsAdminService,IConfiguration conf)
         {
             _corporateDiscountsAdminService = corporateDiscountsAdminService;
+            _configuration = conf;
         }
 
         [HttpPost(nameof(IsAdmin))]
@@ -29,15 +33,46 @@ namespace corporatediscountsApi.Controllers
         public IActionResult GetUserInfo()
 
         {
+            Object userInfo = null;
+            bool  isAdmin;
+            int userId;
+          var cookie =   Request.Cookies["auth"];
+             try { 
+             isAdmin = bool.Parse(_configuration.GetSection("Users:" + cookie + ":isAdmin").Value);
+                userId =Convert.ToInt32(_configuration.GetSection("Users:" + cookie + ":userId").Value);
+            }
+            catch (Exception e)
+            {
+                isAdmin = false;
+                userId = -1;
+                userInfo = new
+                {
+                    userName = "Anonymous",
+                    isAdmin = isAdmin,
+                    UserId = userId
+
+                };
+            }
             //throw new Exception("a");
-            return Ok(new {userName="sinan",isAdmin=false});
+            return Ok(new {userName= cookie, isAdmin= isAdmin ,userId = userId });
 
 
         }
         [HttpPost(nameof(Login))]
-        public IActionResult Login()
+        public IActionResult Login(LoginRequestDto loginRequestDto)
 
         {
+           var passinDb =  _configuration.GetSection("Users:" + loginRequestDto.UserName+ ":password").Value;
+            if (passinDb.Equals(loginRequestDto.Password))
+            {
+
+                Response.Cookies.Append("auth", loginRequestDto.UserName);
+
+            }
+            else
+            {
+                return Unauthorized();
+            }
             //throw new Exception("a");
             return Ok(true);
 
@@ -286,4 +321,5 @@ namespace corporatediscountsApi.Controllers
 
         }
     }
-}
+    }
+
