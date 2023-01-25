@@ -22,7 +22,7 @@ namespace corporatediscountsApi.Controllers
 
         {
             _corporateDiscountsAdminService.SignUp(signUpDto);
-            return Ok();
+            return Ok("başarı ile kayıt olundu");
 
         }
         [HttpPost(nameof(LogOut))]
