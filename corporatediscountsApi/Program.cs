@@ -18,7 +18,7 @@ builder.Services.AddScoped<CorporateDiscountsAdminService, CorporateDiscountsAdm
 builder.Services.AddScoped (typeof(IRepository<,>), typeof(Repository<,>));
 
 var app = builder.Build();
-
+app.UseHttpsRedirection();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {

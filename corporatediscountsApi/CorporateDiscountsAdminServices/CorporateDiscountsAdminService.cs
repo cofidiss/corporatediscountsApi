@@ -438,6 +438,13 @@ namespace corporatediscountsApi.CorporateDiscountsAdminServices
             _dbContext.Set<FirmEntity>().Remove(firm);
             _dbContext.SaveChanges();
         }
+
+        internal void SignUp(SignUpDto signUpDto)
+        {
+            var userEntity = new UsersEntity() { Password=signUpDto.Password,UserName = signUpDto.UserName};
+            _dbContext.Set<UsersEntity>().Add(userEntity);
+            _dbContext.SaveChanges();
+        }
     }
     }
 

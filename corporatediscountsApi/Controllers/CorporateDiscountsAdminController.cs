@@ -17,7 +17,23 @@ namespace corporatediscountsApi.Controllers
             _corporateDiscountsAdminService = corporateDiscountsAdminService;
             _configuration = conf;
         }
+        [HttpPost(nameof(SignUp))]
+        public IActionResult SignUp(SignUpDto signUpDto)
 
+        {
+            _corporateDiscountsAdminService.SignUp(signUpDto);
+            return Ok();
+
+        }
+        [HttpPost(nameof(LogOut))]
+        public IActionResult LogOut()
+
+        {
+            Response.Cookies.Append("auth", DateTime.Now.ToString(),new CookieOptions() { MaxAge=TimeSpan.Zero});
+            return Ok(true);
+
+
+        }
         [HttpPost(nameof(IsAdmin))]
         public IActionResult IsAdmin()
 
